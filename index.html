@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Free Fire Mod">
+    <link rel="apple-touch-icon" sizes="180x180" href="images.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images.png">
+    <title>Aimbot Pro V5 1.118.4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff0000;
+            --secondary-color: #cc0000;
+            --bg-dark: #000;
+            --bg-panel: rgba(26, 0, 43, 0.95);
+            --bg-sidebar: #0c0013;
+            --text-color: #fff;
+            --text-muted: #ccc;
+            --border-color: var(--primary-color);
+            --hover-bg: #33004d;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: var(--bg-dark);
+            overflow: hidden;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        #login-container {
+            width: 350px;
+            height: 250px;
+            background: var(--bg-panel);
+            border-radius: 15px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        #login-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        #login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: #222;
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+        }
+        #login-container input::placeholder {
+            color: var(--text-muted);
+        }
+        #login-container button {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #login-container button:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        #login-container .error {
+            color: #ff6666;
+            font-size: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        #panel {
+            width: 400px;
+            height: 350px;
+            background: var(--bg-panel);
+            border-radius: 15px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+        .freefire-btn-bottom {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 20px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+        .freefire-btn-bottom:hover {
+            background: var(--secondary-color);
+            transform: translateX(-50%) scale(1.05);
+        }
+        .header {
+            background: linear-gradient(135deg, var(--bg-sidebar), #1a001f);
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--primary-color);
+        }
+        .sidebar {
+            width: 120px;
+            float: left;
+            height: 100%;
+            background: var(--bg-sidebar);
+            border-right: 2px solid var(--border-color);
+            padding-top: 10px;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar ul li {
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 5px 10px;
+        }
+        .sidebar ul li i {
+            margin-right: 8px;
+            width: 18px;
+            text-align: center;
+        }
+        .sidebar ul li:hover, .sidebar ul li.active {
+            background: var(--hover-bg);
+            color: var(--primary-color);
+            font-weight: bold;
+            transform: translateX(5px);
+        }
+        .sidebar ul li.active i {
+            color: var(--primary-color);
+        }
+        .content {
+            margin-left: 120px;
+            padding: 15px;
+            height: 280px;
+            overflow-y: auto;
+            position: relative;
+        }
+        .tab {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        input[type="checkbox"] {
+            display: none;
+        }
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .custom-checkbox:hover {
+            transform: scale(1.02);
+        }
+        .checkbox-style {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            background-color: #222;
+            border: 2px solid #555;
+            margin-right: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        input[type="checkbox"]:checked + .checkbox-style {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        input[type="checkbox"]:checked + .checkbox-style::after {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 11px;
+            transform: translate(-50%, -50%);
+        }
+        .custom-checkbox span {
+            font-size: 13px;
+        }
+        .footer {
+            font-size: 11px;
+            color: var(--text-muted);
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 10px;
+        }
+        .fov-slider-container {
+            margin-top: 15px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+        .fov-slider-container label {
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .fov-value {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 5px;
+            outline: none;
+            margin: 0 10px;
+            flex-grow: 1;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            border: 2px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            border: 2px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+        #keyUsada {
+            white-space: nowrap;
+            overflow-x: auto;
+            display: block;
+            max-width: 100%;
+            font-size: 13px;
+            color: var(--text-color);
+            padding-bottom: 5px;
+        }
+        .separator {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: 10px 0;
+        }
+        .tiktok-btn, .instagram-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+        .tiktok-btn:hover, .instagram-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        @media (max-width: 768px) {
+            #login-container {
+                width: 90%;
+                height: auto;
+                padding: 20px;
+            }
+            #panel {
+                width: 90%;
+                height: auto;
+                max-height: 80vh;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .sidebar {
+                width: 100%;
+                float: none;
+                height: auto;
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+            }
+            .content {
+                margin-left: 0;
+                height: auto;
+                max-height: 50vh;
+            }
+            .sidebar ul {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .sidebar ul li {
+                margin: 5px;
+                padding: 10px;
+            }
+            .freefire-btn-bottom {
+                bottom: 20px;
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="login-container">
+        <h2><i class="fas fa-key"></i> Acesso ao Aimbot Pro</h2>
+        <input type="password" id="keyInput" placeholder="Digite a chave de acesso">
+        <button onclick="login()">Entrar</button>
+        <div id="errorMsg" class="error"></div>
+    </div>
+    <div id="panel">
+        <div class="header">Aimbot Pro</div>
+        <div class="sidebar">
+            <ul>
+                <li class="tab-btn active" onclick="switchTab('aimbot')"><i class="fas fa-crosshairs"></i> Aimbot</li>
+                <li class="tab-btn" onclick="switchTab('fps')"><i class="fas fa-bolt"></i> FPS</li>
+                <li class="tab-btn" onclick="switchTab('extra')"><i class="fas fa-star"></i> Extra</li>
+                <li class="tab-btn" onclick="switchTab('info')"><i class="fas fa-info-circle"></i> Info</li>
+            </ul>
+        </div>
+        <div class="content">
+            <div id="aimbot" class="tab active">
+                <label class="custom-checkbox">
+                    <input type="checkbox" checked>
+                    <div class="checkbox-style"></div>
+                    <span>Alto ajuste de alvo</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Auxílio Total</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Cravar na Cabeça</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="fovToggle">
+                    <div class="checkbox-style"></div>
+                    <span>ATIVAR FOV</span>
+                </label>
+                <div class="fov-slider-container">
+                    <label for="fovRange">FOV</label>
+                    <input type="range" min="10" max="360" value="100" id="fovRange">
+                    <span class="fov-value" id="fovValue">100°</span>
+                </div>
+                <div class="fov-slider-container">
+                    <label for="pullStrengthRange">FORÇA DA PUXADA</label>
+                    <input type="range" min="10" max="360" value="100" id="pullStrengthRange">
+                    <span class="fov-value" id="pullStrengthValue">100%</span>
+                </div>
+            </div>
+            <div id="fps" class="tab">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Desligar efeitos</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Modo turbo FPS</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Modo baixa latência</span>
+                </label>
+                <div class="fov-slider-container">
+                    <label for="ramOptimizationRange">Otimização de RAM</label>
+                    <input type="range" min="10" max="360" value="120" id="ramOptimizationRange">
+                    <span class="fov-value" id="ramOptimizationValue">120%</span>
+                </div>
+            </div>
+            <div id="extra" class="tab">
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>No recoil em 20%</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Recarga rápida em 10%</span>
+                </label>
+                <label class="custom-checkbox">
+                    <input type="checkbox">
+                    <div class="checkbox-style"></div>
+                    <span>Gelo sem lag</span>
+                </label>
+                <div class="separator"></div>
+            </div>
+            <div id="info" class="tab">
+                <div class="separator"></div>
+                <div>Criado por @gusta7.ip</div>
+                <a href="https://www.tiktok.com/@gusta7zx?_t=ZS-90zKuLBso7j&_r=1" target="_blank" class="tiktok-btn"><i class="fab fa-tiktok"></i> Seguir no TikTok</a>
+                <a href="https://www.instagram.com/gusta7.ip?igsh=MWszMWxtbjZuZzVreQ%3D%3D&utm_source=qr" target="_blank" class="instagram-btn"><i class="fab fa-instagram"></i> Seguir no Instagram</a>
+                <div>Use com responsabilidade.</div>
+                <div class="separator"></div>
+                <div class="footer">Aimbot Pro V5 1.118.4</div>
+            </div>
+        </div>
+    </div>
+    <a href="#" onclick="return abrirFreeFire()" class="freefire-btn-bottom"><i class="fas fa-gamepad"></i> FREE FIRE</a>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        function login() {
+            const keyInput = document.getElementById('keyInput');
+            const key = keyInput ? keyInput.value.trim() : '';
+            const errorMsg = document.getElementById('errorMsg');
+            if (key.toLowerCase() === 'aimbot') {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('panel').style.display = 'block';
+                const freeBtn = document.querySelector('.freefire-btn-bottom');
+                if (freeBtn) freeBtn.style.display = 'block';
+                if (errorMsg) errorMsg.textContent = '';
+            } else {
+                if (errorMsg) errorMsg.textContent = 'Chave inválida. Digite "Aimbot" (sem aspas).';
+            }
+        }
+        function abrirFreeFire() {
+            window.location.href = "freefireth://";
+            return false;
+        }
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            const tab = document.getElementById(tabId);
+            if (tab) tab.classList.add('active');
+            const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+            buttons.forEach(btn => {
+                if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabId)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        function setupSliders() {
+            const fovRange = document.getElementById('fovRange');
+            const fovValue = document.getElementById('fovValue');
+            if (fovRange && fovValue) {
+                fovValue.textContent = fovRange.value + '°';
+                fovRange.addEventListener('input', () => {
+                    fovValue.textContent = fovRange.value + '°';
+                });
+            }
+            const pullRange = document.getElementById('pullStrengthRange');
+            const pullValue = document.getElementById('pullStrengthValue');
+            if (pullRange && pullValue) {
+                pullValue.textContent = pullRange.value + '%';
+                pullRange.addEventListener('input', () => {
+                    pullValue.textContent = pullRange.value + '%';
+                });
+            }
+            const ramRange = document.getElementById('ramOptimizationRange');
+            const ramValue = document.getElementById('ramOptimizationValue');
+            if (ramRange && ramValue) {
+                ramValue.textContent = ramRange.value + '%';
+                ramRange.addEventListener('input', () => {
+                    ramValue.textContent = ramRange.value + '%';
+                });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            setupSliders();
+            const keyInput = document.getElementById('keyInput');
+            if (keyInput) {
+                keyInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        login();
+                    }
+                });
+            }
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#ff0000" },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.5, "random": true },
+                    "size": { "value": 3, "random": true },
+                    "line_linked": { "enable": true, "distance": 120, "color": "#ff0000", "opacity": 0.4, "width": 1 },
+                    "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                    "modes": { "repulse": { "distance": 100 }, "push": { "particles_nb": 4 } }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</body>
+</html>
